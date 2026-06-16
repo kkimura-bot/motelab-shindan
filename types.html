@@ -1,4 +1,15 @@
-<!DOCTYPE html><html lang="ja"><head><meta charset="UTF-8">
+<!DOCTYPE html><html lang="ja"><head>
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YWSMN8BRMB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-YWSMN8BRMB');
+</script><meta charset="UTF-8">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/icon-192.png">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>16タイプ図鑑｜モテ偏差値診断 - MOTE LAB</title>
 <meta name="description" content="モテ偏差値診断の16タイプを一覧で。4つの軸・7指標とあわせて、あなたに近い『選ばれ方』が見つかる。無料診断で自分のタイプを確かめよう。">
@@ -59,6 +70,28 @@ text-align:right;padding-top:2px;}
 .legend span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:middle;}
 .legend .o::before{background:var(--ok);} .legend .g::before{background:var(--warn);}
 @media(max-width:680px){.grid{grid-template-columns:1fr;}}
+@media(max-width:640px){
+  .hero{padding:30px 18px 26px;}
+  .hero h1{font-size:24px;}
+  .sec-h .sub{display:none;}
+  /* 4つの軸テーブル → ブロックカードレイアウト */
+  .axis-table,.axis-table tbody,.axis-table tr,.axis-table td{display:block;}
+  .axis-table thead{display:none;}
+  .axis-table tr{padding:12px 16px;border-bottom:1px solid var(--line);}
+  .axis-table tr:last-child{border-bottom:none;}
+  .axis-table tr:has(.axc):not(:first-child){border-top:3px solid var(--navy);}
+  .axis-table td{padding:0;border:none;width:auto!important;}
+  .axis-table .axc{display:block;font-size:11px;color:var(--gray);background:transparent;padding-bottom:8px;font-weight:700;letter-spacing:.02em;}
+  .axis-table .code{display:inline;font-size:17px;vertical-align:middle;}
+  .axis-table .nm{display:inline;padding-left:10px;font-size:14px;vertical-align:middle;}
+  .axis-table td:last-child{display:block;padding:6px 0 0 28px;font-size:12.5px;color:var(--gray);line-height:1.6;}
+  /* 7指標テーブル → 横スクロール */
+  .metrics-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:12px;box-shadow:0 3px 14px rgba(0,0,0,.07);}
+  .metrics-wrap table{min-width:440px;box-shadow:none;border-radius:0;}
+  /* タイプカード細調整 */
+  .tl{flex:0 0 46px;font-size:10px;}
+  .tcatch{font-size:12.5px;}
+}
 
 .cta-btn{display:inline-block;margin-top:18px;background:linear-gradient(90deg,var(--gold),var(--goldlt));color:var(--navyd);
 text-decoration:none;font-weight:800;font-size:15px;padding:13px 28px;border-radius:99px;box-shadow:0 6px 20px rgba(200,160,77,.3);}
@@ -82,7 +115,7 @@ font-weight:700;font-size:14px;padding:11px 24px;border-radius:99px;box-shadow:0
 
   <section>
     <div class="sec-h"><span class="no">1</span><h2>4つの軸</h2><span class="sub">この組み合わせ（4文字）でタイプが決まる</span></div>
-    <table><thead><tr><th>軸</th><th>記号</th><th>名前</th><th>意味</th></tr></thead>
+    <table class="axis-table"><thead><tr><th>軸</th><th>記号</th><th>名前</th><th>意味</th></tr></thead>
     <tbody><tr><td class="axc" rowspan="2">軸1：印象の出し方</td>
         <td class="code">V</td><td class="nm">魅せる</td><td>第一印象を意識して作りにいく。身だしなみ・見せ方に投資するタイプ。</td></tr>
         <tr><td class="code alt">N</td><td class="nm">自然体</td><td>飾らずありのまま。演出より中身で勝負したいタイプ。</td></tr><tr><td class="axc" rowspan="2">軸2：距離の詰め方</td>
@@ -246,8 +279,8 @@ font-weight:700;font-size:14px;padding:11px 24px;border-radius:99px;box-shadow:0
 
   <section>
     <div class="sec-h"><span class="no">3</span><h2>7指標</h2><span class="sub">スコア測定＋弱点TOP3に使用</span></div>
-    <table><thead><tr><th>指標名</th><th>キー</th><th>弱点だった時の処方文</th></tr></thead>
-    <tbody><tr><td class="nm">清潔感・身だしなみ</td><td class="key">cleanliness</td><td>清潔感は手をかけた分だけ伸びる。まず眉・肌・服のサイズから。</td></tr><tr><td class="nm">会話・傾聴</td><td class="key">conversation</td><td>会話は質問7割・話す3割を意識すると一気に変わる。</td></tr><tr><td class="nm">共感・気遣い</td><td class="key">empathy</td><td>相手の小さな変化に一言触れるだけで印象が跳ねる。</td></tr><tr><td class="nm">メンタル・自己肯定</td><td class="key">mental</td><td>自己否定の癖は「事実」と「解釈」を分ける練習で和らぐ。</td></tr><tr><td class="nm">余裕・自己開示</td><td class="key">composure</td><td>沈黙を埋めにいかない。余裕は最大の魅力になる。</td></tr><tr><td class="nm">誠実さ・一貫性</td><td class="key">integrity</td><td>見栄より自己開示。弱みを見せられる人が信頼される。</td></tr><tr><td class="nm">行動量・経験</td><td class="key">activity</td><td>場数が全て。まず月1回、新しい場に出ることから。</td></tr></tbody></table>
+    <div class="metrics-wrap"><table><thead><tr><th>指標名</th><th>キー</th><th>弱点だった時の処方文</th></tr></thead>
+    <tbody><tr><td class="nm">清潔感・身だしなみ</td><td class="key">cleanliness</td><td>清潔感は手をかけた分だけ伸びる。まず眉・肌・服のサイズから。</td></tr><tr><td class="nm">会話・傾聴</td><td class="key">conversation</td><td>会話は質問7割・話す3割を意識すると一気に変わる。</td></tr><tr><td class="nm">共感・気遣い</td><td class="key">empathy</td><td>相手の小さな変化に一言触れるだけで印象が跳ねる。</td></tr><tr><td class="nm">メンタル・自己肯定</td><td class="key">mental</td><td>自己否定の癖は「事実」と「解釈」を分ける練習で和らぐ。</td></tr><tr><td class="nm">余裕・自己開示</td><td class="key">composure</td><td>沈黙を埋めにいかない。余裕は最大の魅力になる。</td></tr><tr><td class="nm">誠実さ・一貫性</td><td class="key">integrity</td><td>見栄より自己開示。弱みを見せられる人が信頼される。</td></tr><tr><td class="nm">行動量・経験</td><td class="key">activity</td><td>場数が全て。まず月1回、新しい場に出ることから。</td></tr></tbody></table></div>
   </section>
 
   <section>
