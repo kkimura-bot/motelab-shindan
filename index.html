@@ -50,7 +50,7 @@
   <div id="root"></div>
 
   <script type="text/babel">
-    const {useState, useMemo} = React;
+    const {useState, useMemo, useEffect} = React;
 
     const DATA = {"q": [{"id": 1, "s": 1, "p": "人と会う前に、髪型や服装を入念に整えるほうだ", "c": "商談前に、身だしなみや資料の見せ方を入念に整えるほうだ", "t": "V", "r": 0, "og": "", "i": ""}, {"id": 2, "s": 1, "p": "自分に似合う服やヘアスタイルを把握している", "c": "自分が相手に与える印象を把握している", "t": "V", "r": 0, "og": "", "i": ""}, {"id": 3, "s": 1, "p": "服装やアイテムにこだわりがあると言われる", "c": "立ち居振る舞いがプロっぽいと言われる", "t": "V", "r": 0, "og": "", "i": ""}, {"id": 4, "s": 1, "p": "飾らない自然体の自分が一番だと思う", "c": "演出より中身で勝負するタイプだ", "t": "N", "r": 0, "og": "", "i": ""}, {"id": 5, "s": 1, "p": "見た目より中身で勝負したいと思っている", "c": "第一印象より実績で評価されたい", "t": "N", "r": 1, "og": "", "i": ""}, {"id": 6, "s": 1, "p": "清潔感には自信がある", "c": "清潔感・誠実な見た目には自信がある", "t": "V", "r": 0, "og": "", "i": "cleanliness"}, {"id": 7, "s": 1, "p": "眉・肌・髭など細部の手入れをしている", "c": "名刺・服・小物など細部に気を配っている", "t": "V", "r": 0, "og": "", "i": "cleanliness"}, {"id": 8, "s": 1, "p": "気取らず自然体でいるほうが、人とうまくいくと思う", "c": "取り繕わず自然体で接するほうが信頼されると思う", "t": "N", "r": 0, "og": "", "i": ""}, {"id": 9, "s": 1, "p": "流行を取り入れるより定番を好む", "c": "奇をてらうより王道の進め方を好む", "t": "N", "r": 0, "og": "", "i": ""}, {"id": 10, "s": 1, "p": "作り込んだ印象より、ありのままの自分を出したい", "c": "演出された印象より、素の自分で勝負したい", "t": "N", "r": 0, "og": "", "i": ""}, {"id": 11, "s": 2, "p": "気になる人には自分から話しかける", "c": "興味のある相手には自分から提案を持ちかける", "t": "A", "r": 0, "og": "", "i": ""}, {"id": 12, "s": 2, "p": "連絡先の交換は自分から切り出せる", "c": "次のアポは自分から打診できる", "t": "A", "r": 0, "og": "", "i": ""}, {"id": 13, "s": 2, "p": "相手の出方を待ってから動くほうだ", "c": "相手の反応を見てから動くほうだ", "t": "W", "r": 1, "og": "", "i": ""}, {"id": 14, "s": 2, "p": "グイグイいくより、ゆっくり距離を縮めたい", "c": "押すより、相手のペースに合わせたい", "t": "W", "r": 0, "og": "", "i": ""}, {"id": 15, "s": 2, "p": "デートや食事に自分から誘える", "c": "会食や次回提案に自分から誘える", "t": "A", "r": 0, "og": "", "i": ""}, {"id": 16, "s": 2, "p": "断られるのが怖くて誘えないことがある", "c": "断られるのが怖くて提案を控えることがある", "t": "W", "r": 1, "og": "", "i": "mental"}, {"id": 17, "s": 2, "p": "沈黙になっても自分から話題を出せる", "c": "場が止まっても自分から切り出せる", "t": "A", "r": 0, "og": "", "i": ""}, {"id": 18, "s": 2, "p": "相手から来てくれるのを期待しがちだ", "c": "相手から声がかかるのを待ちがちだ", "t": "W", "r": 1, "og": "", "i": ""}, {"id": 19, "s": 2, "p": "気になる人ができたら行動に移すのは早い", "c": "チャンスを見つけたら動き出すのは早い", "t": "A", "r": 0, "og": "", "i": ""}, {"id": 20, "s": 2, "p": "自分のペースを崩さず相手を待てる", "c": "相手の検討を焦らせず待てる", "t": "W", "r": 0, "og": "", "i": ""}, {"id": 21, "s": 3, "p": "相手の感情に寄り添って話を聞ける", "c": "相手の本音や感情を汲んで話を聞ける", "t": "H", "r": 0, "og": "", "i": "empathy"}, {"id": 22, "s": 3, "p": "話すより聞くほうが得意だ", "c": "提案より傾聴を大事にしている", "t": "H", "r": 0, "og": "", "i": ""}, {"id": 23, "s": 3, "p": "会話では結論や事実を重視する", "c": "商談では論理と根拠を重視する", "t": "L", "r": 0, "og": "", "i": ""}, {"id": 24, "s": 3, "p": "感情より筋道で物事を伝えるほうだ", "c": "感情論より数字・事実で説得するほうだ", "t": "L", "r": 0, "og": "", "i": ""}, {"id": 25, "s": 3, "p": "相手の小さな変化（髪型・気分）に気づく", "c": "相手の温度感の変化に気づくほうだ", "t": "H", "r": 0, "og": "", "i": "empathy"}, {"id": 26, "s": 3, "p": "雑談で相手を楽しませるのが得意だ", "c": "アイスブレイクで場を和ませるのが得意だ", "t": "indicator", "r": 0, "og": "", "i": "conversation"}, {"id": 27, "s": 3, "p": "議論では正しさをはっきりさせたい", "c": "商談では論点を明確にしたい", "t": "L", "r": 0, "og": "", "i": ""}, {"id": 28, "s": 3, "p": "共感の言葉が自然に出るほうだ", "c": "相手をねぎらう言葉が自然に出るほうだ", "t": "H", "r": 0, "og": "", "i": ""}, {"id": 29, "s": 3, "p": "感情的な話より具体的な話が好きだ", "c": "雑談より本題に入りたいほうだ", "t": "L", "r": 1, "og": "", "i": ""}, {"id": 30, "s": 3, "p": "相手の立場や気持ちを想像してから話す", "c": "相手の事情を想像してから提案する", "t": "H", "r": 0, "og": "", "i": ""}, {"id": 31, "s": 4, "p": "自分はモテるほうだと思う", "c": "自分は営業力があるほうだと思う", "t": "OG", "r": 0, "og": "self", "i": ""}, {"id": 32, "s": 4, "p": "自分の長所も短所も正確に分かっている", "c": "自分の強み弱みを正確に把握している", "t": "OG", "r": 0, "og": "self", "i": ""}, {"id": 33, "s": 4, "p": "異性から見た自分の印象を分かっている", "c": "顧客から見た自分の印象を分かっている", "t": "OG", "r": 0, "og": "self", "i": ""}, {"id": 34, "s": 4, "p": "会話力には自信がある", "c": "提案力・会話力には自信がある", "t": "OG", "r": 0, "og": "self", "i": ""}, {"id": 35, "s": 4, "p": "自分は気遣いができるほうだ", "c": "自分は顧客への気配りができるほうだ", "t": "OG", "r": 0, "og": "self", "i": ""}, {"id": 36, "s": 4, "p": "清潔感は十分にあると思う", "c": "信頼される見た目は十分にできていると思う", "t": "OG", "r": 0, "og": "self", "i": ""}, {"id": 37, "s": 4, "p": "自分の改善点は自分が一番分かっている", "c": "自分の課題は自分が一番分かっている", "t": "OG", "r": 0, "og": "self", "i": ""}, {"id": 38, "s": 5, "p": "この1ヶ月で新しい出会いの場に行った", "c": "この1ヶ月で新規の商談機会を自分で作った", "t": "OG", "r": 0, "og": "fact", "i": "activity"}, {"id": 39, "s": 5, "p": "異性と二人で出かけた経験が最近ある", "c": "顧客と一対一でじっくり話した経験が最近ある", "t": "OG", "r": 0, "og": "fact", "i": "activity"}, {"id": 40, "s": 5, "p": "最近、人に容姿や雰囲気を褒められた", "c": "最近、相手から信頼や好印象を言葉で示された", "t": "OG", "r": 0, "og": "fact", "i": ""}, {"id": 41, "s": 5, "p": "自分から誘って実現した予定が最近ある", "c": "自分から提案して通った案件が最近ある", "t": "OG", "r": 0, "og": "fact", "i": "activity"}, {"id": 42, "s": 5, "p": "直近で会話が弾んだ手応えがあった", "c": "直近で商談の手応えを感じた場面があった", "t": "OG", "r": 0, "og": "fact", "i": ""}, {"id": 43, "s": 5, "p": "人付き合いの数をこなしてきたほうだ", "c": "場数（商談・対人）を踏んできたほうだ", "t": "OG", "r": 0, "og": "fact", "i": "activity"}, {"id": 44, "s": 5, "p": "フラれた・うまくいかなかった経験から学んだ", "c": "失注・断られた経験から具体的に改善した", "t": "OG", "r": 0, "og": "fact", "i": "mental"}, {"id": 45, "s": 6, "p": "断られても自分を全否定しないでいられる", "c": "失注しても自分を全否定しないでいられる", "t": "indicator", "r": 0, "og": "", "i": "mental"}, {"id": 46, "s": 6, "p": "どうせ自分なんて、と思ってしまう", "c": "どうせ自分なんて、と思ってしまう", "t": "indicator", "r": 1, "og": "", "i": "mental"}, {"id": 47, "s": 6, "p": "沈黙が気まずくて埋めようとしてしまう", "c": "間が持たず、つい喋りすぎてしまう", "t": "indicator", "r": 1, "og": "", "i": "composure"}, {"id": 48, "s": 6, "p": "自分の弱みも正直に話せる", "c": "自分の不得意も正直に開示できる", "t": "indicator", "r": 0, "og": "", "i": "integrity"}, {"id": 49, "s": 6, "p": "見栄を張ってしまうことがある", "c": "話を盛ってしまうことがある", "t": "indicator", "r": 1, "og": "", "i": "integrity"}, {"id": 50, "s": 6, "p": "自分に余裕があると感じられる", "c": "商談中も気持ちに余裕を保てる", "t": "indicator", "r": 0, "og": "", "i": "composure"}, {"id": 51, "s": 6, "p": "相手に好かれようと無理をしがちだ", "c": "相手に合わせて無理をしがちだ", "t": "indicator", "r": 1, "og": "", "i": "composure"}, {"id": 52, "s": 6, "p": "自分の意見を相手に合わせて変えがちだ", "c": "相手に流されて主張を曲げがちだ", "t": "indicator", "r": 1, "og": "", "i": "integrity"}, {"id": 53, "s": 6, "p": "失敗してもまた挑戦できるほうだ", "c": "断られてもまた提案に行けるほうだ", "t": "indicator", "r": 0, "og": "", "i": "mental"}, {"id": 54, "s": 6, "p": "自分を客観的に見るのが得意だ", "c": "自分を客観視するのが得意だ", "t": "indicator", "r": 0, "og": "selfaux", "i": "selfaware"}, {"id": 55, "s": 6, "p": "人の幸せを素直に喜べる", "c": "相手の成功を素直に喜べる", "t": "indicator", "r": 0, "og": "", "i": "empathy"}, {"id": 56, "s": 6, "p": "約束や時間はきっちり守るほうだ", "c": "納期や約束はきっちり守るほうだ", "t": "indicator", "r": 0, "og": "", "i": "integrity"}, {"id": 57, "s": 6, "p": "感情より冷静な判断を優先するほうだ", "c": "感情より冷静な判断を優先するほうだ", "t": "L", "r": 0, "og": "", "i": ""}, {"id": 58, "s": 6, "p": "初対面の人とも自然に打ち解けられる", "c": "初対面の相手ともすぐ打ち解けられる", "t": "indicator", "r": 0, "og": "", "i": "conversation"}, {"id": 59, "s": 6, "p": "見た目の改善に時間やお金をかけている", "c": "自己研鑽（見せ方・話し方）に投資している", "t": "indicator", "r": 0, "og": "", "i": "cleanliness"}, {"id": 60, "s": 6, "p": "今の自分を変えたいと本気で思っている", "c": "今の成績を本気で変えたいと思っている", "t": "intent", "r": 0, "og": "", "i": "intent"}], "types": {"VAHO": "王道スター", "VALO": "戦略的アタッカー", "VWHO": "安心の癒し系", "VWLO": "クールな演出家", "NAHO": "裏表ない情熱家", "NALO": "誠実な発信者", "NWHO": "わかってる聞き上手", "NWLO": "静かな実力者", "VAHG": "空回りロマンチスト", "VALG": "自己流マッチョ", "VWHG": "健気な片想い職人", "VWLG": "武装した繊細さん", "NAHG": "暴走する善人", "NALG": "理屈っぽい正直者", "NWHG": "隠れ優良物件", "NWLG": "眠れる原石"}, "ind": {"cleanliness": "清潔感・身だしなみ", "conversation": "会話・傾聴", "empathy": "共感・気遣い", "mental": "メンタル・自己肯定", "composure": "余裕・自己開示", "integrity": "誠実さ・一貫性", "activity": "行動量・経験"}, "ogT": 15, "typeDesc": {"VAHO": "魅せて攻めて共感もできる完成型。あとは継続で磨くだけ。", "VALO": "見せ方も攻めも計算ずく。論理派の口説き上手。", "VWHO": "魅せるけど待つ。共感力で相手を包む安心タイプ。", "VWLO": "見せ方上手だが受け身。論理で距離を保つクール系。", "NAHO": "自然体で攻める共感型。素のままで惹きつける稀有な人。", "NALO": "飾らず攻める理性派。信頼の積み上げで選ばれる。", "NWHO": "自然体・受け身・共感。自分の良さを理解している。", "NWLO": "飾らず構えず論理派。地味だが芯のある実力者。", "VAHG": "魅せて攻めるが、ズレに気づいていない。惜しいタイプ。", "VALG": "自信は十分。でも見せ方が独りよがりかも。", "VWHG": "尽くすが空回り。良さが相手に伝わりきっていない。", "VWLG": "演出で守っているが、本音が見えず距離ができる。", "NAHG": "いい奴なのに距離感のミスで損をしている。", "NALG": "誠実だが固い。魅力が伝わりきっていない。", "NWHG": "中身は最高、なのに自分で気づいていない。磨けば化ける。", "NWLG": "素材は一級品、自己認識ゼロ。伸びしろ最大の原石。"}};
 
@@ -160,6 +160,29 @@
       </Shell>;
     }
 
+    // ---- スコア→偏差値→上位% ----
+    function scoreToHensachi(total) {
+      const mean = 55;
+      const sd = 15;
+      const hensachi = Math.round(50 + (total - mean) / sd * 10);
+      return Math.min(75, Math.max(25, hensachi));
+    }
+
+    function hensachiToTopPct(h) {
+      const table = {
+        75: 0.6,  70: 2,   68: 3,   65: 7,
+        63: 10,   60: 16,  58: 21,  55: 31,
+        53: 38,   50: 50,  48: 58,  45: 69,
+        43: 74,   40: 84,  38: 88,  35: 93,
+        30: 98,   25: 99.4
+      };
+      const keys = Object.keys(table).map(Number).sort((a, b) => b - a);
+      for (const k of keys) {
+        if (h >= k) return table[k];
+      }
+      return 99.4;
+    }
+
     function computeResult(qs,ans){
       // axis sums
       const axis={V:0,N:0,A:0,W:0,H:0,L:0};
@@ -199,14 +222,173 @@
       // weak top3
       const weak=Object.keys(indScore).sort((a,b)=>indScore[a]-indScore[b]).slice(0,3);
 
+      // 偏差値・上位%
+      const hensachi = scoreToHensachi(total);
+      const top_pct  = hensachiToTopPct(hensachi);
+
       return {code, name:DATA.types[code], desc:DATA.typeDesc[code], full:TYPEFULL[code],
         axes:{a1,a2,a3,a4}, gap:Math.round(gap), selfPct:Math.round(selfPct), factPct:Math.round(factPct),
-        total, indScore, weak, isG:a4==="G"};
+        total, indScore, weak, isG:a4==="G", hensachi, top_pct};
     }
 
     const AXIS_LABEL={
       V:"魅せる",N:"自然体",A:"攻める",W:"受ける",H:"共感",L:"理性",O:"自覚あり",G:"伸びしろ大"
     };
+
+    // ---- サブコピー（16タイプ） ----
+    const SUBCOPY = {
+      "VAHO": "そつなくこなすけど、決定打に欠ける人",
+      "VALO": "計算で動くから打率は高い。でも少し冷たく見える人",
+      "VWHO": "一緒にいると落ち着くと言われるけど、そこどまりの人",
+      "VWLO": "おしゃれで目を引くけど、何考えてるか分からない人",
+      "NAHO": "飾らないのに誰より行動してる。でも見た目で損してる人",
+      "NALO": "嘘はつかないし約束も守る。でも第一印象が地味な人",
+      "NWHO": "人の話を聞くのは得意。でも自分からは動けない人",
+      "NWLO": "話せば分かるのに、存在に気づかれていない人",
+      "VAHG": "頑張ってるのに、なぜかうまくいかない人",
+      "VALG": "自分のやり方に自信がある。でも空回りしてる可能性がある人",
+      "VWHG": "一生懸命尽くしてるのに、いい人どまりの人",
+      "VWLG": "傷つかないように壁を作ってる。だから近づけない人",
+      "NAHG": "悪気はゼロ。でも距離感で相手を引かせてしまう人",
+      "NALG": "正しいことを言う。でも可愛げがないと思われてる人",
+      "NWHG": "中身は最高なのに、自分だけそれを知らない人",
+      "NWLG": "磨けば絶対光るのに、磨く前に諦めてる人",
+    };
+
+    // ---- ナラティブ文生成 ----
+    function getNarrative(r) {
+      let p1 = "";
+      if (r.axes.a1 === "V" && r.axes.a3 === "H")
+        p1 = "あなたは見た目×共感力を両立できる、希少なタイプです。";
+      else if (r.axes.a1 === "V" && r.axes.a3 === "L")
+        p1 = "あなたは第一印象×論理的判断力が強みの、計算型の魅力を持つタイプです。";
+      else if (r.axes.a1 === "N" && r.axes.a3 === "H")
+        p1 = "あなたは自然体×共感力という、最も信頼されやすい組み合わせを持つタイプです。";
+      else
+        p1 = "あなたは飾らない誠実さ×筋の通った言動という、長期的に選ばれるタイプです。";
+
+      let p2 = "";
+      if (r.isG && r.axes.a2 === "A")
+        p2 = `一方で、自己評価が行動実態を${r.gap}pt 上回っています。動いてはいるのに、方向にズレが生じている可能性があります。`;
+      else if (r.isG && r.axes.a2 === "W")
+        p2 = `一方で、自己評価が行動実態を${r.gap}pt 上回っています。自信はあるのに動けない——このギャップが機会損失を生んでいます。`;
+      else if (!r.isG && r.axes.a2 === "A")
+        p2 = `自己認識は正確です。あとは実力値そのものを上げるフェーズです。${IND_LABEL[r.weak[0]]}が最も伸びしろのある軸です。`;
+      else
+        p2 = "自己認識は正確です。課題は行動量の少なさにあります。まず場数を増やすことが、唯一の突破口です。";
+
+      return { p1, p2 };
+    }
+
+    // ---- 引用バー文生成 ----
+    function getQuoteText(r) {
+      if (r.selfPct >= 70 && r.factPct < 50)
+        return `あなたは"自分はモテるほうだ（自己評価 ${r.selfPct}%）"と強く感じているのに、実際の行動量・手応えは ${r.factPct}% に留まっています。このギャップ ${r.gap}pt が"盲点"の正体です。`;
+      else if (r.selfPct < 50 && r.factPct >= 50)
+        return `あなたは自分に厳しく評価しがち（自己評価 ${r.selfPct}%）ですが、実際の行動実態は ${r.factPct}% と相応の水準にあります。過小評価が足かせになっています。`;
+      else
+        return `自己評価（${r.selfPct}%）と行動実態（${r.factPct}%）のギャップは ${Math.abs(r.gap)}pt。均衡していますが、どちらも"もう一段"上げるフェーズです。`;
+    }
+
+    // ---- OGシェアカード生成 ----
+    async function generateShareCard(r) {
+      const canvas = document.createElement('canvas');
+      canvas.width = 1200;
+      canvas.height = 630;
+      const ctx = canvas.getContext('2d');
+
+      // 背景グラデーション
+      const grad = ctx.createLinearGradient(0, 0, 1200, 630);
+      grad.addColorStop(0, '#243b5e');
+      grad.addColorStop(1, '#152A45');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, 1200, 630);
+
+      // MOTE LAB ロゴ
+      ctx.font = '24px Georgia';
+      ctx.fillStyle = '#C8A04D';
+      ctx.textAlign = 'left';
+      ctx.fillText('MOTE LAB', 80, 180);
+
+      // YOUR TYPE
+      ctx.font = '700 18px "Noto Sans JP", sans-serif';
+      ctx.fillStyle = '#C8A04D';
+      ctx.fillText('YOUR TYPE', 80, 220);
+
+      // コード（Gold グラデ）
+      const goldGrad = ctx.createLinearGradient(80, 0, 400, 0);
+      goldGrad.addColorStop(0, '#C8A04D');
+      goldGrad.addColorStop(1, '#E7C788');
+      ctx.font = '800 72px Georgia';
+      ctx.fillStyle = goldGrad;
+      ctx.fillText(r.code, 80, 310);
+
+      // タイプ名
+      ctx.font = '700 42px "Noto Sans JP", sans-serif';
+      ctx.fillStyle = '#FFFFFF';
+      ctx.fillText(r.name, 80, 370);
+
+      // サブコピー
+      const subcopy = SUBCOPY[r.code] || '';
+      ctx.font = '400 22px "Noto Sans JP", sans-serif';
+      ctx.fillStyle = '#C7D3E6';
+      // 長い場合は2行に折り返す（maxWidth 460px相当）
+      const maxW = 460;
+      if (ctx.measureText(subcopy).width <= maxW) {
+        ctx.fillText(subcopy, 80, 410);
+      } else {
+        const mid = Math.ceil(subcopy.length / 2);
+        ctx.fillText(subcopy.slice(0, mid), 80, 400);
+        ctx.fillText(subcopy.slice(mid), 80, 430);
+      }
+
+      // 区切り線
+      ctx.strokeStyle = 'rgba(200,160,77,0.4)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(80, 450);
+      ctx.lineTo(480, 450);
+      ctx.stroke();
+
+      // 右ブロック: 総合スコアラベル
+      ctx.font = '400 18px "Noto Sans JP", sans-serif';
+      ctx.fillStyle = '#8195b3';
+      ctx.textAlign = 'right';
+      ctx.fillText('総合スコア', 1120, 220);
+
+      // スコア数値
+      ctx.font = '800 96px Georgia';
+      ctx.fillStyle = '#C8A04D';
+      ctx.fillText(String(r.total), 1020, 325);
+
+      // / 100
+      ctx.font = '400 32px "Noto Sans JP", sans-serif';
+      ctx.fillStyle = '#8195b3';
+      ctx.fillText('/ 100', 1120, 325);
+
+      // 偏差値
+      ctx.font = '400 24px "Noto Sans JP", sans-serif';
+      ctx.fillStyle = '#FFFFFF';
+      ctx.fillText(`偏差値 ${r.hensachi}`, 1120, 378);
+
+      // 上位%
+      ctx.font = '700 24px "Noto Sans JP", sans-serif';
+      ctx.fillStyle = '#E7C788';
+      ctx.fillText(`上位 ${r.top_pct}%`, 1120, 412);
+
+      // 右下 MOTE LAB
+      ctx.font = '400 20px Georgia';
+      ctx.fillStyle = 'rgba(255,255,255,0.3)';
+      ctx.fillText('MOTE LAB', 1120, 600);
+
+      // 左下 URL
+      ctx.font = '400 18px "Noto Sans JP", sans-serif';
+      ctx.fillStyle = 'rgba(255,255,255,0.4)';
+      ctx.textAlign = 'left';
+      ctx.fillText('mote-lab.group', 80, 600);
+
+      return new Promise(resolve => canvas.toBlob(blob => resolve(URL.createObjectURL(blob))));
+    }
     const WEAK_RX={
       cleanliness:"清潔感は手をかけた分だけ伸びる。まず眉・肌・服のサイズから。",
       conversation:"会話は質問7割・話す3割を意識すると一気に変わる。",
@@ -218,7 +400,16 @@
     };
 
     function Result({r,mode,onRetry}){
-      const inds=Object.keys(r.indScore);
+      const [shareCardUrl, setShareCardUrl] = useState(null);
+
+      useEffect(() => {
+        let objectUrl = null;
+        generateShareCard(r).then(url => {
+          objectUrl = url;
+          setShareCardUrl(url);
+        });
+        return () => { if (objectUrl) URL.revokeObjectURL(objectUrl); };
+      }, [r.code]);
 
       // CTA: 申し込みフォームへ直行（診断結果を引き継ぐ）
       const ctaUrl = `apply.html?mode=${mode}&type=${r.code}&name=${encodeURIComponent(r.name)}&score=${r.total}`;
@@ -227,99 +418,199 @@
 
       // シェアテキスト
       const shareText = encodeURIComponent(
-        `私の魅力タイプは【${r.code} ${r.name}】でした。総合スコア${r.total}/100。あなたは？ #MOTELAB診断`
+        `私の魅力タイプは【${r.code} ${r.name}】でした。偏差値${r.hensachi}・上位${r.top_pct}%。あなたは？ #MOTELAB診断`
       );
       const shareUrl = encodeURIComponent("https://test.mote-lab.group");
       const twitterUrl = `https://twitter.com/intent/tweet?text=${shareText}&url=${shareUrl}`;
+      const lineShareUrl = `https://social-plugins.line.me/lineit/share?url=${shareUrl}&text=${shareText}`;
 
-      return <div style={{maxWidth:620,margin:"0 auto",width:"100%",paddingBottom:40}}>
-        <div style={{textAlign:"center",marginBottom:6}}>
-          <span style={{fontFamily:"Georgia,serif",letterSpacing:"0.3em",color:GOLD,fontSize:12}}>YOUR TYPE</span>
-        </div>
-        <div style={{textAlign:"center",marginBottom:4}}>
+      const igDownload = () => {
+        if (!shareCardUrl) return;
+        const a = document.createElement('a');
+        a.href = shareCardUrl;
+        a.download = `motelab_${r.code}.png`;
+        a.click();
+      };
+
+      const narrative = getNarrative(r);
+      const quoteText = getQuoteText(r);
+
+      // ---- SEC-1: ヒーロー ----
+      const heroSection = (
+        <div style={{textAlign:"center",paddingBottom:32,marginBottom:0}}>
+          {/* ロゴ */}
+          <div style={{fontFamily:"Georgia,serif",letterSpacing:"0.3em",color:GOLD,fontSize:13,marginBottom:14}}>MOTE LAB</div>
+          {/* YOUR TYPE */}
+          <div style={{fontSize:12,color:GOLD,letterSpacing:"0.3em",fontWeight:700,marginBottom:8}}>YOUR TYPE</div>
+          {/* タイプコード */}
           <div style={{fontFamily:"Georgia,serif",fontSize:46,fontWeight:800,letterSpacing:"0.12em",
-            background:`linear-gradient(90deg,${GOLD},${GOLDLT})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>
+            background:`linear-gradient(90deg,${GOLD},${GOLDLT})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",marginBottom:4}}>
             {r.code}
           </div>
+          {/* タイプ名 */}
+          <h1 style={{fontSize:30,fontWeight:800,color:"#fff",margin:"0 0 6px"}}>{r.name}</h1>
+          {/* サブコピー */}
+          <p style={{fontSize:16,fontWeight:400,color:ICE,lineHeight:1.4,maxWidth:380,margin:"0 auto 20px",textAlign:"center"}}>
+            {SUBCOPY[r.code] || r.desc}
+          </p>
+          {/* 区切り線 */}
+          <div style={{width:200,height:1,background:"rgba(255,255,255,0.12)",margin:"0 auto 20px"}}/>
+          {/* スコア行: ゴールド枠ボックス */}
+          <div style={{display:"inline-block",border:"1px solid rgba(200,160,77,0.3)",borderRadius:16,
+            padding:"20px 24px",backdropFilter:"blur(4px)",background:"rgba(255,255,255,0.04)",marginBottom:16}}>
+            <div style={{display:"flex",alignItems:"baseline",justifyContent:"center",gap:12,marginBottom:6}}>
+              <span style={{fontFamily:"Georgia,serif",fontSize:52,fontWeight:800,color:GOLD,lineHeight:1}}>
+                {r.hensachi}
+              </span>
+              <div style={{textAlign:"left"}}>
+                <div style={{fontSize:11,color:"#8195b3",marginBottom:2}}>偏差値</div>
+                <div style={{fontSize:18,color:ICE}}>上位 <span style={{fontFamily:"Georgia,serif",fontWeight:700}}>{r.top_pct}</span>%</div>
+              </div>
+            </div>
+            <div style={{fontSize:12,color:GRAY,fontFamily:"Georgia,serif"}}>総合スコア {r.total} / 100</div>
+          </div>
+          {/* ギャップ数値バナー */}
+          <div style={{fontSize:13,color:r.isG?WARN:OK,fontWeight:600,marginTop:4}}>
+            {r.isG
+              ? `自己評価が行動実態を ${r.gap}pt 上回っています。あなたが気づいていない"盲点"があります。`
+              : `自己評価と行動実態のズレは ${Math.abs(r.gap)}pt。自己認識は比較的正確です。`}
+          </div>
         </div>
-        <h1 style={{textAlign:"center",fontSize:30,fontWeight:800,color:"#fff",margin:"2px 0 10px"}}>{r.name}</h1>
-        <p style={{textAlign:"center",color:ICE,fontSize:15,lineHeight:1.7,margin:"0 auto 24px",maxWidth:460}}>{r.desc}</p>
+      );
 
-        {/* type detail: あるある / 強み / 伸びしろ */}
-        {r.full && <div style={{maxWidth:520,margin:"0 auto 26px"}}>
-          <DetailRow label="あるある" text={r.full[0]} accent={GRAY}/>
-          <DetailRow label="強み" text={r.full[1]} accent={OK}/>
-          <DetailRow label="伸びしろ" text={r.full[2]} accent={r.isG?WARN:GOLD}/>
-        </div>}
-
-        {/* 4 axes chips */}
-        <div style={{display:"flex",gap:8,justifyContent:"center",flexWrap:"wrap",marginBottom:28}}>
-          {[r.axes.a1,r.axes.a2,r.axes.a3,r.axes.a4].map((a,i)=>(
-            <span key={i} style={{background:i===3?(r.isG?"rgba(176,67,47,0.18)":"rgba(46,125,82,0.18)"):"rgba(255,255,255,0.07)",
-              border:`1px solid ${i===3?(r.isG?WARN:OK):"rgba(255,255,255,0.18)"}`,
-              color:i===3?(r.isG?"#e9a08f":"#7fcaa1"):"#fff",
-              padding:"7px 14px",borderRadius:99,fontSize:13,fontWeight:600}}>
-              {a} {AXIS_LABEL[a]}
-            </span>
-          ))}
-        </div>
-
-        {/* total score */}
-        <div style={{...panel,textAlign:"center"}}>
-          <div style={{color:GRAY,fontSize:12,fontWeight:700,letterSpacing:"0.08em",marginBottom:4}}>総合スコア</div>
-          <div style={{fontFamily:"Georgia,serif",fontSize:52,fontWeight:800,color:NAVY,lineHeight:1}}>{r.total}<span style={{fontSize:20,color:GRAY}}> / 100</span></div>
-        </div>
-
-        {/* radar */}
+      // ---- SEC-2: ナラティブ ----
+      const narrativeSection = (
         <div style={panel}>
-          <div style={{color:NAVYD,fontSize:14,fontWeight:700,marginBottom:10}}>7指標バランス</div>
-          <Radar indScore={r.indScore}/>
+          <div style={{color:GRAY,fontSize:12,fontWeight:800,letterSpacing:"0.08em",marginBottom:10}}>あなたの傾向</div>
+          <p style={{color:"#1A2A3A",fontSize:14,lineHeight:1.8,margin:"0 0 10px"}}>{narrative.p1}</p>
+          <p style={{color:"#1A2A3A",fontSize:14,lineHeight:1.8,margin:"0 0 12px"}}>{narrative.p2}</p>
+          {/* 引用バー */}
+          <div style={{borderLeft:`4px solid ${GOLD}`,background:"rgba(200,160,77,0.06)",
+            padding:"12px 16px",borderRadius:"0 8px 8px 0"}}>
+            <p style={{color:"#4a3a1a",fontSize:13,lineHeight:1.7,margin:0}}>「{quoteText}」</p>
+          </div>
         </div>
+      );
 
-        {/* self-awareness gap */}
+      // ---- SEC-3: レーダーチャート ----
+      const radarSection = (
+        <div style={panel}>
+          <div style={{color:NAVYD,fontSize:14,fontWeight:700,marginBottom:10}}>7つの軸で見るあなたのバランス</div>
+          <Radar indScore={r.indScore} weakKey={r.weak[0]}/>
+          {/* 最低スコア軸の吹き出し */}
+          <div style={{background:"rgba(176,67,47,0.08)",border:"1px solid rgba(176,67,47,0.3)",
+            borderRadius:8,padding:"8px 12px",marginTop:8}}>
+            <span style={{color:WARN,fontSize:13,fontWeight:700}}>
+              今すぐ上げるべき軸：{IND_LABEL[r.weak[0]]}（{r.indScore[r.weak[0]]}/100）
+            </span>
+          </div>
+          {/* フリーミアム境界メッセージ */}
+          <p style={{color:GRAY,fontSize:12,lineHeight:1.6,margin:"10px 0 0",display:"flex",alignItems:"flex-start",gap:6}}>
+            <span style={{opacity:0.7}}>🔒</span>
+            <span>各指標の詳細スコアと「なぜこのスコアなのか」の分析は、無料カウンセリング後の再診断で開示されます。</span>
+          </p>
+        </div>
+      );
+
+      // ---- SEC-4: 自己認識ギャップ ----
+      const gapSection = (
         <div style={panel}>
           <div style={{color:NAVYD,fontSize:14,fontWeight:700,marginBottom:10}}>自己認識ギャップ</div>
           <GapBar label="自己評価" v={r.selfPct} color={NAVY}/>
           <GapBar label="行動実態" v={r.factPct} color={GOLD}/>
-          <p style={{color:GRAY,fontSize:13,lineHeight:1.7,margin:"12px 0 0"}}>
+          <p style={{color:GRAY,fontSize:13,lineHeight:1.7,margin:"12px 0 10px"}}>
             {r.isG
-              ? `自己評価が行動実態を ${r.gap}pt 上回っています。あなたは"自分の見られ方"に伸びしろがあるタイプ。実は、ここが一番変われるポイントです。`
-              : `自己評価と行動実態のズレは ${Math.abs(r.gap)}pt。自分を客観的に見られています。あとは実力を上げるだけ。`}
+              ? `自己評価が行動実態を ${r.gap}pt 上回っています。あなたは"自分はできている"と感じているのに、実際の結果がついてきていない状態です。このズレが生まれる具体的な理由は、再診断で明らかになります。`
+              : `自己評価と行動実態のズレは ${Math.abs(r.gap)}pt と小さく、自分を客観的に見られています。あとは実力そのものを上げるフェーズです。`}
+          </p>
+          {/* ロックされたコンテンツ案内 */}
+          <p style={{color:GRAY,fontSize:13,fontStyle:"italic",lineHeight:1.6,display:"flex",alignItems:"flex-start",gap:6,margin:0}}>
+            <span style={{opacity:0.7}}>🔒</span>
+            <span>このギャップが生まれる具体的な理由と、解消ステップは → 再診断（無料カウンセリング後）で明らかになります。</span>
           </p>
         </div>
+      );
 
-        {/* weak top3 */}
+      // ---- SEC-5: 強み ----
+      const strengthSection = (
         <div style={panel}>
-          <div style={{color:NAVYD,fontSize:14,fontWeight:700,marginBottom:12}}>あなたの伸びしろ TOP3</div>
-          {r.weak.map((k,i)=>(
-            <div key={k} style={{display:"flex",gap:12,marginBottom:i<2?14:0,alignItems:"flex-start"}}>
-              <div style={{flex:"0 0 26px",height:26,borderRadius:7,background:NAVY,color:"#fff",
-                fontFamily:"Georgia,serif",fontWeight:700,fontSize:14,display:"flex",alignItems:"center",justifyContent:"center"}}>{i+1}</div>
-              <div style={{flex:1}}>
-                <div style={{color:NAVYD,fontWeight:700,fontSize:14}}>{IND_LABEL[k]} <span style={{color:WARN,fontFamily:"Georgia,serif"}}>{r.indScore[k]}</span></div>
-                <div style={{color:GRAY,fontSize:12.5,lineHeight:1.6,marginTop:2}}>{WEAK_RX[k]}</div>
-              </div>
+          <div style={{color:NAVYD,fontSize:14,fontWeight:700,marginBottom:12}}>あなたの強み</div>
+          {r.full && <>
+            <DetailRow label="強み" text={r.full[1]} accent={OK}/>
+            <DetailRow label="あるある" text={r.full[0]} accent={GRAY}/>
+          </>}
+          {/* 区切り */}
+          <div style={{height:1,background:LINE,margin:"12px 0"}}/>
+          {/* 伸びしろ一行目のみ（輪郭）+ ロック案内 */}
+          {r.full && <div style={{marginBottom:10}}>
+            <div style={{display:"flex",gap:12,alignItems:"flex-start",marginBottom:8}}>
+              <span style={{flex:"0 0 64px",fontSize:11,fontWeight:800,color:GOLD,letterSpacing:"0.04em",paddingTop:2,textAlign:"right"}}>伸びしろ</span>
+              <span style={{flex:1,color:"#dfe7f2",fontSize:13.5,lineHeight:1.7}}>{r.full[2].split('。')[0]}。</span>
             </div>
-          ))}
-        </div>
-
-        {/* CTA */}
-        <div style={{background:`linear-gradient(135deg,${NAVY},${NAVYD})`,borderRadius:16,padding:"28px 24px",textAlign:"center",marginTop:8}}>
-          <div style={{color:GOLDLT,fontSize:13,fontWeight:700,marginBottom:8}}>これは"自己採点"。本当のスコアはプロが採点する。</div>
-          <div style={{color:"#fff",fontSize:18,fontWeight:800,lineHeight:1.5,marginBottom:8}}>
-            次のステップ：無料Web面談で<br/>あなたの処方箋を受け取ろう
-          </div>
-          <p style={{color:ICE,fontSize:13,lineHeight:1.7,margin:"0 0 20px"}}>
-            診断結果をもとに、プロコーチが弱点と改善策を個別に解説。<br/>完全無料・30分・オンライン。
+          </div>}
+          <p style={{color:GRAY,fontSize:13,lineHeight:1.6,display:"flex",alignItems:"flex-start",gap:6,margin:"0 0 12px"}}>
+            <span style={{opacity:0.7}}>🔒</span>
+            <span>弱みの詳細・あなた専用の改善ロードマップは、プロとの30分カウンセリング後に開示します。</span>
           </p>
+          {/* 続きを見るボタン */}
+          <div style={{textAlign:"center"}}>
+            <button
+              onClick={()=>{document.getElementById('result-cta')&&document.getElementById('result-cta').scrollIntoView({behavior:'smooth'});}}
+              style={{background:`linear-gradient(90deg,${GOLD},${GOLDLT})`,color:NAVYD,border:"none",
+                borderRadius:99,padding:"10px 24px",fontSize:14,fontWeight:700,cursor:"pointer"}}>
+              続きを見る →
+            </button>
+          </div>
+        </div>
+      );
+
+      // ---- SEC-6: 最低スコア軸の一言指摘 ----
+      const weakSection = (
+        <div style={{...panel,borderLeft:`4px solid ${WARN}`,paddingLeft:18}}>
+          <div style={{fontSize:11,color:WARN,fontWeight:800,letterSpacing:"0.04em",marginBottom:6}}>今すぐ上げるべき1軸</div>
+          <div style={{fontSize:16,color:NAVYD,fontWeight:700,marginBottom:4}}>{IND_LABEL[r.weak[0]]}</div>
+          <div style={{fontFamily:"Georgia,serif",fontSize:28,color:WARN,fontWeight:700,marginBottom:8}}>{r.indScore[r.weak[0]]}/100</div>
+          <p style={{color:GRAY,fontSize:13,lineHeight:1.6,margin:"0 0 10px"}}>{WEAK_RX[r.weak[0]]}</p>
+          <p style={{color:GRAY,fontSize:12,fontStyle:"italic",lineHeight:1.6,display:"flex",alignItems:"flex-start",gap:6,margin:0}}>
+            <span style={{opacity:0.7}}>🔒</span>
+            <span>2位・3位の指標と、具体的な改善プランは再診断で。</span>
+          </p>
+        </div>
+      );
+
+      // ---- SEC-7: CTA ----
+      const ctaSection = (
+        <div id="result-cta" style={{background:`linear-gradient(135deg,${NAVY},${NAVYD})`,borderRadius:16,padding:"32px 24px",textAlign:"center",marginTop:8}}>
+          {/* リード文 */}
+          <div style={{color:GOLDLT,fontSize:13,fontWeight:700,marginBottom:8}}>この診断は"輪郭"だけ。正体と処方箋はプロが見る。</div>
+          {/* メインコピー */}
+          <div style={{color:"#fff",fontSize:20,fontWeight:800,lineHeight:1.5,marginBottom:8}}>
+            30分で、あなたのモテを変える。
+          </div>
+          {/* サブコピー */}
+          <p style={{color:ICE,fontSize:14,lineHeight:1.8,margin:"0 0 12px"}}>
+            診断スコアをもとに、プロが精密再診断＋あなた専用の改善プランを提示します。完全無料・30分・オンライン。
+          </p>
+          {/* 緊急性コピー */}
+          <div style={{color:"#E7C788",fontSize:12,fontWeight:700,letterSpacing:"0.06em",marginBottom:16}}>
+            今月の無料カウンセリング枠 残りわずか
+          </div>
+
+          {/* OGシェアカードプレビュー */}
+          {shareCardUrl && (
+            <div style={{marginBottom:16,borderRadius:8,overflow:"hidden",maxWidth:360,margin:"0 auto 16px",
+              border:"1px solid rgba(200,160,77,0.2)"}}>
+              <img src={shareCardUrl} alt="シェアカード" style={{width:"100%",display:"block"}}/>
+            </div>
+          )}
 
           {/* メインCTA: LINE */}
           <a href={LINE_URL} target="_blank" rel="noopener noreferrer"
             style={{display:"flex",alignItems:"center",justifyContent:"center",gap:10,background:"#06C755",
               color:"#fff",padding:"15px 28px",borderRadius:99,fontSize:16,fontWeight:800,textDecoration:"none",
-              boxShadow:"0 6px 20px rgba(6,199,85,0.4)",marginBottom:12,width:"100%",maxWidth:320,margin:"0 auto 12px"}}>
+              boxShadow:"0 6px 20px rgba(6,199,85,0.4)",width:"100%",maxWidth:320,margin:"0 auto 12px"}}>
             <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.3c-5.52 0-10 3.62-10 8.08 0 3.99 3.55 7.33 8.35 7.97.32.07.77.21.88.49.1.25.07.64.03.89l-.14.84c-.04.25-.2 1 .88.54 1.07-.45 5.78-3.4 7.89-5.83C21.27 13.6 22 12.04 22 10.38 22 5.92 17.52 2.3 12 2.3zM8.13 12.6H6.2a.4.4 0 0 1-.4-.4V8.93a.4.4 0 0 1 .81 0v2.86h1.52a.4.4 0 0 1 0 .81zm1.5-.4a.4.4 0 0 1-.81 0V8.93a.4.4 0 0 1 .81 0v3.27zm3.93 0a.4.4 0 0 1-.28.38.4.4 0 0 1-.45-.15l-1.68-2.29v2.06a.4.4 0 0 1-.81 0V8.93a.4.4 0 0 1 .73-.23l1.68 2.29V8.93a.4.4 0 0 1 .81 0v3.27zm2.86-2.04a.4.4 0 0 1 0 .81h-1.13v.82h1.13a.4.4 0 0 1 0 .81h-1.53a.4.4 0 0 1-.4-.4V8.93a.4.4 0 0 1 .4-.4h1.53a.4.4 0 0 1 0 .81h-1.13v.82h1.13z"/></svg>
-            LINEで面談を予約する（無料）
+            LINEで無料カウンセリングを予約する
           </a>
 
           {/* サブCTA: 直接予約 */}
@@ -332,25 +623,60 @@
             Web面談を直接予約する
           </a>
 
-          <div style={{marginTop:4,display:"flex",justifyContent:"center",alignItems:"center",gap:16,flexWrap:"wrap"}}>
-            <button onClick={onRetry} style={{background:"none",border:"none",color:"#8195b3",fontSize:13,cursor:"pointer",textDecoration:"underline"}}>もう一度診断する</button>
-            <a href="types.html" style={{color:"#8195b3",fontSize:13,textDecoration:"underline"}}>全16タイプを見る</a>
+          {/* シェアボタン群 */}
+          <div style={{display:"flex",justifyContent:"center",alignItems:"center",gap:10,flexWrap:"wrap",marginBottom:16}}>
+            {/* X(Twitter) */}
             <a href={twitterUrl} target="_blank" rel="noopener noreferrer"
               style={{display:"inline-flex",alignItems:"center",gap:6,background:"rgba(255,255,255,0.08)",border:"1px solid rgba(255,255,255,0.2)",
                 color:"#fff",padding:"8px 16px",borderRadius:99,fontSize:13,fontWeight:600,textDecoration:"none"}}>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.74l7.73-8.835L1.254 2.25H8.08l4.213 5.567 5.951-5.567zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-              結果をシェア
+              Xでシェア
             </a>
+            {/* LINE シェア */}
+            <a href={lineShareUrl} target="_blank" rel="noopener noreferrer"
+              style={{display:"inline-flex",alignItems:"center",gap:6,background:"#06C755",
+                color:"#fff",padding:"8px 16px",borderRadius:99,fontSize:13,fontWeight:600,textDecoration:"none"}}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.3c-5.52 0-10 3.62-10 8.08 0 3.99 3.55 7.33 8.35 7.97.32.07.77.21.88.49.1.25.07.64.03.89l-.14.84c-.04.25-.2 1 .88.54 1.07-.45 5.78-3.4 7.89-5.83C21.27 13.6 22 12.04 22 10.38 22 5.92 17.52 2.3 12 2.3z"/></svg>
+              LINEでシェア
+            </a>
+            {/* IG用画像DL */}
+            <button onClick={igDownload}
+              style={{display:"inline-flex",alignItems:"center",gap:6,background:"rgba(193,53,132,0.9)",
+                color:"#fff",padding:"8px 16px",borderRadius:99,fontSize:13,fontWeight:600,
+                border:"none",cursor:shareCardUrl?"pointer":"default",opacity:shareCardUrl?1:0.4}}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+              Instagramにシェア（画像を保存）
+            </button>
+          </div>
+
+          {/* もう一度診断する / 全16タイプ */}
+          <div style={{display:"flex",justifyContent:"center",alignItems:"center",gap:16,flexWrap:"wrap"}}>
+            <button onClick={onRetry} style={{background:"none",border:"none",color:"#8195b3",fontSize:13,cursor:"pointer",textDecoration:"underline"}}>もう一度診断する</button>
+            <a href="types.html" style={{color:"#8195b3",fontSize:13,textDecoration:"underline"}}>全16タイプを見る</a>
           </div>
         </div>
+      );
 
+      // ---- SEC-8: フッター ----
+      const footerSection = (
         <p style={{textAlign:"center",color:"#6b7a93",fontSize:11,marginTop:20,lineHeight:1.6}}>
           ※ これは簡易自己診断です。結果は仮の目安であり、本サービスの正式スコアとは異なります。
         </p>
+      );
+
+      return <div style={{maxWidth:620,margin:"0 auto",width:"100%",paddingBottom:40}}>
+        {heroSection}
+        {narrativeSection}
+        {radarSection}
+        {gapSection}
+        {strengthSection}
+        {weakSection}
+        {ctaSection}
+        {footerSection}
       </div>;
     }
 
-    function Radar({indScore}){
+    function Radar({indScore, weakKey}){
       const keys=Object.keys(indScore);
       const n=keys.length, R=78, cx=110, cy=110;
       const pt=(i,r)=>{ const a=-Math.PI/2 + i*2*Math.PI/n; return [cx+r*Math.cos(a), cy+r*Math.sin(a)]; };
@@ -359,9 +685,22 @@
         {[0.25,0.5,0.75,1].map((f,gi)=>(
           <polygon key={gi} points={keys.map((k,i)=>pt(i,R*f).join(",")).join(" ")} fill="none" stroke={LINE} strokeWidth="1"/>
         ))}
-        {keys.map((k,i)=>{const[x,y]=pt(i,R);return <line key={i} x1={cx} y1={cy} x2={x} y2={y} stroke={LINE} strokeWidth="1"/>;})}
-        <polygon points={poly} fill="rgba(31,58,95,0.22)" stroke={NAVY} strokeWidth="2"/>
-        {keys.map((k,i)=>{const[x,y]=pt(i,R+16);return <text key={i} x={x} y={y} fontSize="9" fill={GRAY} textAnchor="middle" dominantBaseline="middle">{IND_SHORT[k]||IND_LABEL[k]}</text>;})}
+        {keys.map((k,i)=>{
+          const[x,y]=pt(i,R);
+          const isWeak = k === weakKey;
+          return <line key={i} x1={cx} y1={cy} x2={x} y2={y} stroke={isWeak?WARN:LINE} strokeWidth={isWeak?2.5:1}/>;
+        })}
+        <polygon points={poly} fill="rgba(200,160,77,0.13)" stroke="#C8A04D" strokeWidth="2"/>
+        {keys.map((k,i)=>{
+          const[x,y]=pt(i,R+16);
+          const isWeak = k === weakKey;
+          return <text key={i} x={x} y={y} fontSize="9" fill={isWeak?WARN:GRAY} fontWeight={isWeak?"bold":"normal"} textAnchor="middle" dominantBaseline="middle">{IND_SHORT[k]||IND_LABEL[k]}</text>;
+        })}
+        {keys.map((k,i)=>{
+          if(k !== weakKey) return null;
+          const[x,y]=pt(i,R*indScore[k]/100);
+          return <circle key={"wk"+i} cx={x} cy={y} r="5" fill={WARN}/>;
+        })}
       </svg>;
     }
 
